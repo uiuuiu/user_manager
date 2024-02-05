@@ -19,6 +19,7 @@ jobs:
       - name: Bundle
         run: |
           gem install bundler
+          gem install error_highlight -v '0.6.0'
           bundle install --jobs 4 --retry 3
       - name: Run standardrb
         run: bin/bundle exec rake standard STANDARDOPTS="--format github"
