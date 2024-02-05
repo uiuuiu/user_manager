@@ -1,0 +1,29 @@
+version: '2'
+services:
+  db: 
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: app
+    ports:
+      - "3307:3306"
+  app: 
+    build:
+      dockerfile: Dockerfile.dev
+    tty: true
+    command: ./bin/dev
+    volumes: 
+      - ".:/rails"
+      - "/rails/node_modules"
+    ports: 
+      - "3001:3000"
+    depends_on:
+      - db
+    links:
+        - db
+    environment:
+      RAILS_ENV: development
+      DB_USER: root
+      DB_PASSWORD: 12345678
+      DB_HOST: db

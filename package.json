@@ -2,12 +2,24 @@
   "name": "app",
   "private": true,
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css"
+    "build": "./node_modules/.bin/esbuild --bundle app/javascript/application.js --outdir=app/assets/builds --minify --sourcemap",
+    "build:css": "./node_modules/.bin/tailwindcss -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "esbuild": "^0.20.0"
+    "@hotwired/turbo-rails": "^7.1.1",
+    "autoprefixer": "^10.4.17",
+    "esbuild": "^0.20.0",
+    "esbuild-rails": "^1.0.7",
+    "flowbite": "^2.2.1",
+    "postcss": "^8.4.33",
+    "tailwindcss": "^3.4.1"
   },
-  "version": "0.0.0"
+  "version": "0.0.0",
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "core-js": "^3.35.1",
+    "esbuild-plugin-babel": "^0.2.3"
+  }
 }
