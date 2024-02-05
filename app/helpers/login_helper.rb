@@ -1,5 +1,4 @@
 module LoginHelper
-
   def login_page_label(**options)
     tag_options = {class: default_classes_label}
     tag_options.merge!(options)
@@ -34,38 +33,38 @@ module LoginHelper
   private
 
   def default_classes_label
-    %w(
-      block 
-      mb-2 
-      text-sm 
-      font-medium 
-      text-gray-900 
+    %w[
+      block
+      mb-2
+      text-sm
+      font-medium
+      text-gray-900
       dark:text-white
       required
-    ).join(" ")
+    ].join(" ")
   end
 
   def default_classes_input
-    %w(
+    %w[
       bg-gray-50
-      border 
-      border-gray-300 
-      text-gray-900 
-      sm:text-sm rounded-lg 
-      focus:ring-primary-600 
-      focus:border-primary-600 
-      block w-full 
+      border
+      border-gray-300
+      text-gray-900
+      sm:text-sm rounded-lg
+      focus:ring-primary-600
+      focus:border-primary-600
+      block w-full
       dark:bg-gray-700
-      dark:border-gray-600 
+      dark:border-gray-600
       dark:placeholder-gray-400
       dark:text-white
       dark:focus:ring-blue-500
       dark:focus:border-blue-500
-    ).join(" ")
+    ].join(" ")
   end
 
   def default_classes_submit
-    %w(
+    %w[
       w-full
       text-white
       bg-primary-600
@@ -81,6 +80,6 @@ module LoginHelper
       dark:bg-primary-600
       dark:hover:bg-primary-700
       dark:focus:ring-primary-800
-    ).join(" ")
+    ].join(" ")
   end
 end
