@@ -3,11 +3,22 @@ name: StandardRB
 on: [pull_request]
 
 jobs:
-  build:
+  standardrb:
+    name: StandardRB Action
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: StandardRB Linter
-      uses: uiuuiu/standardrb-action@1.0.2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v1
+      - name: Read ruby version
+        run: echo ::set-output name=RUBY_VERSION::$(([ -f .ruby-version ] && cat .ruby-version) || echo '3.2.1')
+        id: rv
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{ steps.rv.outputs.RUBY_VERSION }}"
+          bundler-cache: true
+      - name: Bundle
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+      - name: Run standardrb
+        run: bin/bundle exec rake standard STANDARDOPTS="--format github"
