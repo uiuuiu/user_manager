@@ -8,13 +8,11 @@ module ApplicationHelper
     # include LoginHelper
   end
 
-
   def body_content_tag
   end
 
   private
 
   def body_content_tag_css
-    
   end
 end

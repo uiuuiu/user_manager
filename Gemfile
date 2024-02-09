@@ -50,7 +50,7 @@ gem "haml-rails"
 
 gem "devise"
 gem "tailwindcss-rails"
-gem 'draper'
+gem "draper"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -79,5 +79,9 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "rspec-rails", "~> 6.1.0"
+  gem "rails-controller-testing"
+  gem "database_cleaner"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers"
   gem "simplecov", require: false
 end
