@@ -8,4 +8,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: "dashboard#index"
+  resources :users
+  resources :teams
+  resources :roles
 end

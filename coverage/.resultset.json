@@ -1,0 +1,57 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/mfv-computer-0062/DY/upwork/user_manager/spec/support/controller_macros.rb": {
+        "lines": [
+          1,
+          1,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null
+        ]
+      },
+      "/Users/mfv-computer-0062/DY/upwork/user_manager/app/models/team.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null
+        ]
+      },
+      "/Users/mfv-computer-0062/DY/upwork/user_manager/app/models/team_user.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/mfv-computer-0062/DY/upwork/user_manager/app/models/team_role.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      },
+      "/Users/mfv-computer-0062/DY/upwork/user_manager/app/models/role.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          null
+        ]
+      }
+    },
+    "timestamp": 1707331568
+  }
+}

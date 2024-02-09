@@ -1,0 +1,53 @@
+name: Rspec
+
+on: [pull_request]
+
+jobs:
+  rspec:
+    name: Rspec
+    runs-on: ubuntu-latest
+    services:
+      # How to use MySQL
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: actions/checkout@v1
+      - name: Read ruby version
+        run: echo ::set-output name=RUBY_VERSION::$(([ -f .ruby-version ] && cat .ruby-version) || echo '3.2.1')
+        id: rv
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "${{ steps.rv.outputs.RUBY_VERSION }}"
+          bundler-cache: true
+      - name: Verify MySQL connection from host
+        run: |
+          sudo apt-get install -y mysql-client libmysqlclient-dev
+          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -proot -e "SHOW GRANTS FOR 'root'@'localhost'"
+      - name: Bundle and setup db
+        env:
+          RAILS_ENV: test
+          DB_USER: root
+          DB_PASS: root
+          DB_HOST: 127.0.0.1
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        run: |
+          gem install bundler
+          gem install error_highlight -v '0.6.0'
+          bundle install --jobs 4 --retry 3
+          cp config/database.yml.test config/database.yml
+          echo $DB_PASS
+          RAILS_ENV=test bin/rails db:create db:migrate
+      - name: Run rspec
+        env:
+          RAILS_ENV: test
+          DB_USER: root
+          DB_PASS: root
+          DB_HOST: 127.0.0.1
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+        run: bin/bundle exec rspec
