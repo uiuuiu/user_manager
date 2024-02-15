@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :team_users, dependent: :destroy
   has_many :teams, through: :team_users
 
+  has_many :users_from_teams, -> { distinct }, through: :teams, source: :users
+
   validates :email, presence: true, uniqueness: {case_sensitive: false}, length: {minimum: 3, maximum: 50}
   validates :username, uniqueness: {case_sensitive: false}, length: {minimum: 3, maximum: 20}
   validates :first_name, presence: true, length: {minimum: 3, maximum: 20}

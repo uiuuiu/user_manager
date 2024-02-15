@@ -19,5 +19,8 @@ RSpec.describe Team, type: :model do
     it { should have_many(:team_roles).dependent(:destroy) }
     it { should have_many(:roles).through(:team_roles) }
     it { should have_many(:own_roles).class_name("Role").with_foreign_key("team_id").dependent(:destroy) }
+    it { should have_many(:team_user_roles).through(:team_users) }
+    it { should have_many(:admins).through(:team_users).source(:user).conditions("team_users.role = 'TeamAdmin'") }
+    it { should have_many(:sub_admins).through(:team_users).source(:user).conditions("team_users.role = 'SubAdmin'") }
   end
 end

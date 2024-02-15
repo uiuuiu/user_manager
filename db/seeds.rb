@@ -13,27 +13,41 @@ User.transaction do
     user.email = "test#{index}@example.com"
     user.first_name = Faker::Name.first_name
     user.last_name = Faker::Name.last_name
+    user.username = "#{user.first_name.downcase}_#{user.last_name.downcase}"
     user.password = "password"
     user.password_confirmation = "password"
-    user.save!
+    user.save!(validate: false)
   end
 end
+
+users = User.all
 
 Team.transaction do
   10.times do |index|
-    Team.create!(
+    owner = users.sample
+    team = Team.create!(
       name: "Team #{index}",
-      description: Faker::Lorem.sentence
+      description: Faker::Lorem.sentence,
+      owner: owner
+    )
+    TeamUser.create!(
+      user: owner,
+      team: team
     )
   end
 end
 
+teams = Team.all
 TeamUser.transaction do
-  20.times do |index|
-    TeamUser.create!(
-      user: User.find(index + 1),
-      team: Team.find((index / 2) + 1)
-    )
+  teams.each do |team|
+    total_users = [2, 3, 4].sample
+    user_ids = users.without(team.owner).sample(total_users).pluck(:id)
+    user_ids.each do |user_id|
+      TeamUser.create!(
+        user_id: user_id,
+        team_id: team.id
+      )
+    end
   end
 end
 
