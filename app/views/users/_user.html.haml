@@ -1,5 +1,5 @@
 %tr.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700
-  %th.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{:scope => "row"}
+  %th.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{:scope => "row", "data-user-id-param" => "#{user.id}", "data-action" => "click->user#navigate"}
     = user.id
   %td.px-6.py-4
     = user.email

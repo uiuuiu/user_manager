@@ -78,8 +78,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_162046) do
   create_table "teams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
+    t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_teams_on_name", unique: true
+    t.index ["owner_id"], name: "index_teams_on_owner_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -107,4 +110,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_03_162046) do
   add_foreign_key "team_user_roles", "team_users"
   add_foreign_key "team_users", "teams"
   add_foreign_key "team_users", "users"
+  add_foreign_key "teams", "users", column: "owner_id"
 end

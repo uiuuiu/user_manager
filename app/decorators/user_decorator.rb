@@ -8,7 +8,7 @@ class UserDecorator < ApplicationDecorator
 
   def team_links
     object.teams.map do |team|
-      h.link_to team.name, h.team_path(team), class: object_link_css
+      h.link_to team.name, h.edit_team_path(team), class: object_link_css
     end.join(", ").html_safe
   end
 end
