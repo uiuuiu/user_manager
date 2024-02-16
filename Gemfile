@@ -52,6 +52,7 @@ gem "devise"
 gem "tailwindcss-rails"
 gem "draper"
 gem "simple_command"
+gem "pundit", "~> 2.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -86,4 +87,5 @@ group :test do
   gem "factory_bot_rails"
   gem "shoulda-matchers"
   gem "simplecov", require: false
+  gem "pundit-matchers", "~> 3.1"
 end
