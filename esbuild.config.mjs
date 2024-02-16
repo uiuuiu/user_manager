@@ -2,6 +2,7 @@ import path from 'path'
 import * as esbuild from "esbuild"
 import rails from 'esbuild-rails'
 import babel from 'esbuild-plugin-babel'
+import "flowbite/dist/flowbite.turbo.js"
 
 esbuild
   .build({
@@ -9,8 +10,7 @@ esbuild
     // Path to application.js folder
     absWorkingDir: path.join(process.cwd(), 'app/javascript'),
     // Application.js file, used by Rails to bundle all JS Rails code
-    entryPoints: ['application.js', 'node_modules/flowbite/dist/flowbite.js'],
-    // Destination of JS bundle, points to the Rails JS Asset folder
+    entryPoints: ['application.js'],
     outdir: path.join(process.cwd(), 'app/assets/builds'),
     // Enables watch option. Will regenerate JS bundle if files are changed
     watch: process.argv.includes('--watch'),

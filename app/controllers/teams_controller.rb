@@ -1,8 +1,8 @@
-class TeamsController < ApplicationController
+class TeamsController < AuthenticatedTeamController
   before_action :set_team, only: [:edit]
 
   def index
-    @teams = current_user.teams.includes(:users).decorate
+    @teams = current_user.owned_teams.includes(:users).decorate
   end
 
   def edit

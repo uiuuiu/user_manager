@@ -14,6 +14,7 @@ RSpec.describe Team, type: :model do
   end
 
   describe "Associations" do
+    it { should belong_to(:owner).class_name("User") }
     it { should have_many(:team_users).dependent(:destroy) }
     it { should have_many(:users).through(:team_users) }
     it { should have_many(:team_roles).dependent(:destroy) }

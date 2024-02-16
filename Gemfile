@@ -51,6 +51,7 @@ gem "haml-rails"
 gem "devise"
 gem "tailwindcss-rails"
 gem "draper"
+gem "simple_command"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
