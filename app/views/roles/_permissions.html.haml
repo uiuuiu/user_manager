@@ -1,0 +1,16 @@
+.relative.overflow-x-auto
+  %table.w-full.text-sm.text-left.rtl:text-right.text-gray-500.dark:text-gray-400{ "data-controller" => "role"}
+    %thead.text-xs.text-gray-700.uppercase.bg-gray-50.dark:bg-gray-700.dark:text-gray-400
+      %tr
+        %th.px-6.py-3{scope: "col"}
+        - @resources.each do |role_resource|
+          %th.text-center.px-6.py-3{scope: "col"}
+            = role_resource["name"]
+    %tbody
+      - RoleResource::ACTIONS.each do |action_name, action_value|
+        %tr.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700
+          %th.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{scope: "row"}
+            = action_name
+          - @resources.each do |resc|
+            %td.text-center.px-6.py-4
+              = permission_checkbox_tag @role, resc["name"], action_value

@@ -1,0 +1,15 @@
+.flex.items-center
+  %button#dropdownSelectTeamButton.text-blue.focus:outline-none.focus:ring-blue-300.font-medium.rounded-lg.text-sm.px-5.text-center.inline-flex.items-center.dark:bg-blue-600.dark:hover:bg-blue-700.dark:focus:ring-blue-800{class: "py-2.5", "data-dropdown-toggle" => "dropdown", type: "button"}
+    = current_team&.name || "No active team"
+    %svg.ms-3{"aria-hidden" => "true", class: "w-2.5 h-2.5", fill: "none", viewbox: "0 0 10 6", xmlns: "http://www.w3.org/2000/svg"}
+      %path{d: "m1 1 4 4 4-4", stroke: "currentColor", "stroke-linecap" => "round", "stroke-linejoin" => "round", "stroke-width" => "2"}
+  / Dropdown menu
+  #dropdown.z-10.hidden.bg-white.divide-y.divide-gray-100.rounded-lg.shadow.w-44.dark:bg-gray-700
+    %ul.py-2.text-sm.text-gray-700.dark:text-gray-200{"aria-labelledby" => "dropdownSelectTeamButton"}
+      - current_user.teams.each do |team|
+        - if team.id == current_team&.id
+          %li
+            %a.block.px-4.py-2.bg-gray-100{href: "#"}= team.name
+        - else
+          %li
+            %a.block.px-4.py-2.hover:bg-gray-100.dark:hover:bg-gray-600.dark:hover:text-white{href: "/activate_teams/#{team.id}"}= team.name

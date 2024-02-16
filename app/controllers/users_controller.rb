@@ -1,20 +1,41 @@
-class UsersController < ApplicationController
-  before_action :set_user, only: [:edit]
+class UsersController < AuthenticatedTeamController
+  before_action :set_user, only: [:edit, :update]
 
   def index
-    @users = current_user.users_from_teams.order(id: :asc).includes(:teams).decorate
+    User.preload_teams_associations_with_current_team_id(current_team.id) do
+      @users = current_team.users.order(id: :asc).includes(:current_team_roles).decorate
+      # To use class attribute when rendering the view
+      render :index
+    end
   end
 
   def edit
-    @teams = current_user.teams.decorate
+    User.preload_teams_associations_with_current_team_id(current_team.id) do
+      @roles = current_team.roles
+      # To use class attribute when rendering the view
+      render :edit
+    end
   end
 
   def update
+    User.preload_teams_associations_with_current_team_id(current_team.id) do
+      service = Users::UpdateTeamRolesService.call(current_team, @user, permitted_params[:current_team_role_ids].compact_blank.map(&:to_i))
+      # To use class attribute when rendering the view
+      if service.success?
+        redirect_to edit_user_path(@user), notice: "User roles updated"
+      else
+        redirect_back(fallback_location: root_path)
+      end
+    end
   end
 
   private
 
+  def permitted_params
+    params.require(:user).permit(current_team_role_ids: [])
+  end
+
   def set_user
-    @user = User.find(params[:id]).decorate
+    @user = current_team.users.find(params[:id]).decorate
   end
 end

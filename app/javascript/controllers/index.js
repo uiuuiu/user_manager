@@ -8,7 +8,9 @@ import HelloController from "./hello_controller"
 import LoginController from "./login_controller"
 import UserController from "./user_controller"
 import TeamController from "./team_controller"
+import RoleController from "./role_controller"
 application.register("hello", HelloController)
 application.register("login", LoginController)
 application.register("user", UserController)
 application.register("team", TeamController)
+application.register("role", RoleController)

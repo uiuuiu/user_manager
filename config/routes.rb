@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :users
   resources :teams
   resources :roles
+  resources :activate_teams, only: [:show]
 end
