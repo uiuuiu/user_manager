@@ -5,4 +5,10 @@ FactoryBot.define do
     description { "test" }
     owner { User.first || FactoryBot.create(:default_user) }
   end
+
+  factory :team do
+    name { "New Team" }
+    description { "test" }
+    owner { FactoryBot.create(:user) }
+  end
 end
