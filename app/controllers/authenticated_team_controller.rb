@@ -1,4 +1,5 @@
 class AuthenticatedTeamController < ApplicationController
+  include Pundit
   before_action :authenticate_team!
   helper_method :current_team
 
@@ -10,5 +11,9 @@ class AuthenticatedTeamController < ApplicationController
 
   def current_team
     @current_team ||= current_user.teams.find_by(id: session[:current_team_id])
+  end
+
+  def pundit_user
+    PunditUserContext.new(current_user, current_team)
   end
 end

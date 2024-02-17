@@ -8,4 +8,13 @@ FactoryBot.define do
     password { "abc123@" }
     password_confirmation { "abc123@" }
   end
+
+  factory :user do
+    first_name { "New user" }
+    last_name { "001" }
+    email { "dy.test2@yopmail.com" }
+    username { "jimmy2" }
+    password { "abc123@" }
+    password_confirmation { "abc123@" }
+  end
 end

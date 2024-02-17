@@ -4,4 +4,9 @@ FactoryBot.define do
     team { Team.first || FactoryBot.create(:default_team) }
     role { Role.first || FactoryBot.create(:default_role) }
   end
+
+  factory :team_role do
+    team { Team.first || FactoryBot.create(:default_team) }
+    role { Role.first || FactoryBot.create(:default_role) }
+  end
 end
