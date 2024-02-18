@@ -6,7 +6,7 @@
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
-    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
+    -# = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload"
     = javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
   %body
     - if devise_controller?
@@ -16,4 +16,5 @@
       = render partial: "layouts/sidebar"
       .p-4.sm:ml-64
         .p-4.border-2.border-gray-200.border-dashed.rounded-lg.dark:border-gray-700.mt-14
+          = render partial: "layouts/alerts" if flash.any?
           = yield

@@ -1,10 +1,12 @@
 class TeamPolicy < ApplicationPolicy
   attr_reader :user, :team, :role_resource
 
-  def initialize(user, resource)
+  RESOURCE = "teams".freeze
+
+  def initialize(user, _record)
     @user = user.object
     @team = user.current_team
-    @role_resource = RoleResource.new(resource)
+    @role_resource = RoleResource.new(RESOURCE)
   end
 
   def index?
