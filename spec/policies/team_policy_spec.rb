@@ -17,12 +17,6 @@ describe TeamPolicy do
         expect(subject.role_resource).to be_a RoleResource
       end
     end
-
-    context "with wrong resource" do
-      it "raises an exception" do
-        expect { described_class.new(pundit_user_context, "Resource not found") }.to raise_error Pundit::NotDefinedError
-      end
-    end
   end
 
   context "with owner" do

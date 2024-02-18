@@ -1,3 +1,8 @@
+### Requirements
+- Ruby: 3.2.1
+- Rails: 7.1.3
+- Nodejs: 16.15.1
+
 ### How to run
 1. Run docker build
   ```

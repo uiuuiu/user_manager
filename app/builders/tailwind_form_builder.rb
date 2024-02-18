@@ -1,6 +1,8 @@
 class TailwindFormBuilder < ActionView::Helpers::FormBuilder
-  # include ActionView::Helpers::TagHelper
+  include Pundit::Authorization
+  include ActionView::Helpers::TagHelper
   # include ActionView::Context
+  delegate :current_user, :pundit_user, to: :@template
 
   def text_field(attribute, options = {})
     options[:class] += " #{text_field_css}"
@@ -28,7 +30,31 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
     super(value, options)
   end
 
+  def authorize_submit(resource, permission, value = nil, options = {})
+    return unless policy(:team).send(permission)
+    options[:class] += " #{submit_css}"
+    submit(value, options) do
+      yield if block_given?
+    end
+  end
+
+  def authorize_button_to(action_name, resource, permission, options, &block)
+    return unless policy(:team).send(permission)
+    options[:class] += " #{button_to_css}"
+    @template.button_to(action_name, **options) do
+      block&.call
+    end
+  end
+
   private
+
+  def current_user
+    @template.current_user
+  end
+
+  def pundit_user
+    @template.pundit_user
+  end
 
   def text_field_css
     %w[
@@ -91,6 +117,31 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
       dark:bg-primary-600
       dark:hover:bg-primary-700
       dark:focus:ring-primary-800
+    ].join(" ")
+  end
+
+  def button_to_css
+    %w[
+      text-red-600
+      inline-flex
+      items-center
+      hover:text-white
+      border
+      border-red-600
+      hover:bg-red-600
+      focus:ring-4
+      focus:outline-none
+      focus:ring-red-300
+      font-medium
+      rounded-lg
+      text-sm
+      px-5
+      text-center
+      dark:border-red-500
+      dark:text-red-500
+      dark:hover:text-white
+      dark:hover:bg-red-600
+      dark:focus:ring-red-900
     ].join(" ")
   end
 end

@@ -1,7 +1,8 @@
 class AuthenticatedTeamController < ApplicationController
-  include Pundit
   before_action :authenticate_team!
   helper_method :current_team
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected
 
@@ -15,5 +16,10 @@ class AuthenticatedTeamController < ApplicationController
 
   def pundit_user
     PunditUserContext.new(current_user, current_team)
+  end
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(root_path)
   end
 end
