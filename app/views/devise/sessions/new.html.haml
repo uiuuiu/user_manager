@@ -3,25 +3,24 @@
     %a.flex.items-center.mb-6.text-2xl.font-semibold.text-gray-900.dark:text-white{:href => "#"}
       %img.w-8.h-8.mr-2{:alt => "logo", :src => "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"}/
       User Management
-    .w-full.bg-white.rounded-lg.shadow.dark:border.md:mt-0.sm:max-w-md.xl:p-0.dark:bg-gray-800.dark:border-gray-700
+    .w-full.bg-white.rounded-lg.shadow.dark:border.md:mt-0.sm:max-w-md.xl:p-0.dark:bg-gray-800.dark:border-gray-700{"data-controller" => "login"}
       .p-6.space-y-4.md:space-y-6.sm:p-8
-        %h1.text-xl.font-bold.leading-tight.tracking-tight.text-gray-900.md:text-2xl.dark:text-white
-          Sign in to your account
-        = form_for(resource, as: resource_name, url: session_path(resource_name), html: { "data-controller" => "login", class: "space-y-4 md:space-y-6"}) do |f|
+        = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-4 md:space-y-6" }) do |f|
+          %h1.text-xl.font-bold.leading-tight.tracking-tight.text-gray-900.md:text-2xl.dark:text-white
+            %span Sign in to your account
+          = render "devise/shared/error_messages", resource: resource
           %div
-            = login_page_label for: "email" do
-              Your email
-            = login_page_input f, :email, html_id: "email", html_class: "p-2.5", :placeholder => "name@company.com", :type => "email",
-              "data-login-target" => "email"
+            = login_page_label for: "login" do
+              Your email or username
+            = login_page_input f, :login, html_id: "email", html_class: "p-2.5", :placeholder => "name@company.com or username", "data-login-target" => "login"
           %div
             = login_page_label for: "password" do
               Password
-            = login_page_input f, :password, html_id: "password", html_class: "p-2.5", :placeholder => "••••••••", :required => "", :type => "password",
-              "data-login-target" => "password"
+            = login_page_input f, :password, html_id: "password", html_class: "p-2.5", :placeholder => "••••••••", :required => "", :type => "password", "data-login-target" => "password"
           .flex.items-center.justify-between
             .flex.items-start
               .flex.items-center.h-5
-                %input#remember.w-4.h-4.border.border-gray-300.rounded.bg-gray-50.focus:ring-3.focus:ring-primary-300.dark:bg-gray-700.dark:border-gray-600.dark:focus:ring-primary-600.dark:ring-offset-gray-800{"aria-describedby" => "remember", :required => "", :type => "checkbox"}/
+                %input#remember.w-4.h-4.border.border-gray-300.rounded.bg-gray-50.focus:ring-3.focus:ring-primary-300.dark:bg-gray-700.dark:border-gray-600.dark:focus:ring-primary-600.dark:ring-offset-gray-800{"aria-describedby" => "remember", :type => "checkbox"}/
               .ml-3.text-sm
                 %label.text-gray-500.dark:text-gray-300{:for => "remember"} Remember me
             %a.text-sm.font-medium.text-primary-600.hover:underline.dark:text-primary-500{:href => "#"} Forgot password?

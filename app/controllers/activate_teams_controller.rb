@@ -9,6 +9,7 @@ class ActivateTeamsController < ApplicationController
 
   def set_team
     @team = current_user.teams.find(params[:id])
+    current_user.update_attribute(:active_team_id, @team.id)
     session[:current_team_id] = @team.id
   end
 end

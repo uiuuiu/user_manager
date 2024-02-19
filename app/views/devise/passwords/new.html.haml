@@ -1,10 +1,19 @@
-%h2 Forgot your password?
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  .actions
-    = f.submit "Send me reset password instructions"
-= render "devise/shared/links"
+%section.bg-gray-50.dark:bg-gray-900
+  .flex.flex-col.items-center.justify-center.px-6.py-8.mx-auto.md:h-screen.lg:py-0
+    %a.flex.items-center.mb-6.text-2xl.font-semibold.text-gray-900.dark:text-white{:href => "#"}
+      %img.w-8.h-8.mr-2{:alt => "logo", :src => "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"}/
+      User Management
+    .w-full.bg-white.rounded-lg.shadow.dark:border.md:mt-0.sm:max-w-md.xl:p-0.dark:bg-gray-800.dark:border-gray-700
+      .p-6.space-y-4.md:space-y-6.sm:p-8
+        %h1.text-xl.font-bold.leading-tight.tracking-tight.text-gray-900.md:text-2xl.dark:text-white
+          Forgot your password?
+        = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "space-y-4 md:space-y-6" }) do |f|
+          = render "devise/shared/error_messages", resource: resource
+          .field
+            = login_page_label for: "email" do 
+              Your email
+            %br/
+            = login_page_input f, :email, autofocus: true, autocomplete: "email", html_class: "p-2.5", required: "required"
+          .actions
+            = login_page_submit(f, :html_class => "py-2.5", :type => "submit") do
+              Send me reset password instructions

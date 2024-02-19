@@ -7,11 +7,11 @@ class AuthenticatedTeamController < ApplicationController
   protected
 
   def authenticate_team!
-    redirect_to root_path if current_team.blank?
+    redirect_to root_path, alert: "No active team" if current_team.blank?
   end
 
   def current_team
-    @current_team ||= current_user.teams.find_by(id: session[:current_team_id])
+    @current_team ||= current_user.teams.find_by(id: session[:current_team_id] || current_user.active_team_id)
   end
 
   def pundit_user

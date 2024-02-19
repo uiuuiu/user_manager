@@ -16,6 +16,7 @@ User.transaction do
     user.username = "#{user.first_name.downcase}_#{user.last_name.downcase}"
     user.password = "password"
     user.password_confirmation = "password"
+    user.confirmed_at = Time.now
     user.save!(validate: false)
   end
 end

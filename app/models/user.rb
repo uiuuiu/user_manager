@@ -2,9 +2,10 @@ class User < ApplicationRecord
   include UserAssociationPreloadWithParams
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :validatable
   has_one_attached :avatar
+  has_one :active_team, class_name: "Team", foreign_key: "active_team_id"
 
   has_many :team_users, dependent: :destroy
   has_many :teams, through: :team_users
@@ -23,4 +24,20 @@ class User < ApplicationRecord
   validates :password, presence: true, length: {minimum: 6, maximum: 20}
   validates :password_confirmation, presence: true
   validates :password, confirmation: true
+
+  attr_writer :login
+
+  def login
+    @login || username || email
+  end
+
+  # Allow login with both email and username
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if (login = conditions.delete(:login))
+      where(conditions.to_h).where(["lower(username) = :value OR lower(email) = :value", {value: login.downcase}]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_h).first
+    end
+  end
 end

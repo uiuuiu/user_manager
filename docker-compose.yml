@@ -8,7 +8,14 @@ services:
       MYSQL_DATABASE: app
     ports:
       - "3307:3306"
-  app: 
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'  # disable saving logs
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # web ui
+  app:
     build:
       dockerfile: Dockerfile.dev
     tty: true
@@ -23,8 +30,11 @@ services:
       - db
     links:
         - db
+        - mailhog
     environment:
       RAILS_ENV: development
       DB_USER: root
       DB_PASSWORD: 12345678
       DB_HOST: db
+      LAUNCHY_DRY_RUN: true
+      BROWSER: /dev/null
