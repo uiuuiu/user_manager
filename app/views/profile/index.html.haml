@@ -1,0 +1,28 @@
+%section.bg-white.dark:bg-gray-900
+  .max-w-2xl.px-4.py-8.mx-auto.lg:py-16
+    %h2.mb-4.text-xl.font-bold.text-gray-900.dark:text-white
+      = "User Profile"
+    = form_with model: current_user, url: profile_path(current_user), method: :patch, builder: TailwindFormBuilder do |f|
+      .grid.gap-4.mb-4.sm:grid-cols-2.sm:gap-6.sm:mb-5
+        .w-full
+          %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "first_name"}
+            Fist name
+          = f.text_field :first_name, class: "p-2.5", required: "required", placeholder: "First name"
+        .w-full
+          %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "last_name"}
+            Last name
+          = f.text_field :last_name, class: "p-2.5", required: "required", placeholder: "Last name"
+        .sm:col-span-2
+          %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "email"}
+            Email
+          = f.text_field :email, class: "p-2.5", disabled: true
+        .sm:col-span-2{"data-controller" => "profile"}
+          %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "avatar"}
+            Avatar
+          = f.file_field :avatar, class: "p-2.5", accept: "image/png, image/jpeg, image/jpg", data: {"profile-target": "input", "action": "profile#preview"}
+          #Img.mb-3
+            - if current_user.avatar.attached?
+              = image_tag current_user.avatar.representation(resize_to_limit: [100, 100]), class: "w-20 h-20"
+            
+      .flex.items-center.space-x-4
+        = f.submit "Update user", class: "py-2.5"
