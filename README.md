@@ -13,3 +13,5 @@
   docker-compose run app ./bin/rails db:drop db:create db:migrate db:seed
   ```
 3. Access to `localhost:3000`
+
+4. For mail service, access mailhog at: `http://localhost:8025/`

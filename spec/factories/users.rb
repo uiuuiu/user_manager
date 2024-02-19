@@ -7,6 +7,7 @@ FactoryBot.define do
     username { "jimmy" }
     password { "abc123@" }
     password_confirmation { "abc123@" }
+    confirmed_at { Time.now }
   end
 
   factory :user do
@@ -16,5 +17,6 @@ FactoryBot.define do
     username { "jimmy2" }
     password { "abc123@" }
     password_confirmation { "abc123@" }
+    confirmed_at { Time.now }
   end
 end
