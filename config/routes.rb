@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   resources :teams
   resources :roles
   resources :activate_teams, only: [:show]
+  resources :profile, only: [:index, :update]
 end

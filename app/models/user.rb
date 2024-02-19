@@ -2,6 +2,7 @@ class User < ApplicationRecord
   include UserAssociationPreloadWithParams
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  attr_accessor :is_profile_update
   devise :database_authenticatable, :registerable, :confirmable,
     :recoverable, :rememberable, :validatable
   has_one_attached :avatar
@@ -21,9 +22,9 @@ class User < ApplicationRecord
   validates :username, uniqueness: {case_sensitive: false}, length: {minimum: 3, maximum: 20}
   validates :first_name, presence: true, length: {minimum: 3, maximum: 20}
   validates :last_name, presence: true, length: {minimum: 3, maximum: 20}
-  validates :password, presence: true, length: {minimum: 6, maximum: 20}
-  validates :password_confirmation, presence: true
-  validates :password, confirmation: true
+  validates :password, presence: true, length: {minimum: 6, maximum: 20}, unless: :is_profile_update
+  validates :password_confirmation, presence: true, unless: :is_profile_update
+  validates :password, confirmation: true, unless: :is_profile_update
 
   attr_writer :login
 
@@ -39,5 +40,11 @@ class User < ApplicationRecord
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+
+  private
+
+  def password_required?
+    !is_profile_update && super
   end
 end
