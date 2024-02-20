@@ -31,7 +31,7 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def authorize_submit(resource, permission, value = nil, options = {})
-    return unless policy(:team).send(permission)
+    return unless policy(resource).send(permission)
     options[:class] += " #{submit_css}"
     submit(value, options) do
       yield if block_given?
@@ -39,9 +39,17 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def authorize_button_to(action_name, resource, permission, options, &block)
-    return unless policy(:team).send(permission)
+    return unless policy(resource).send(permission)
     options[:class] += " #{button_to_css}"
     @template.button_to(action_name, **options) do
+      block&.call
+    end
+  end
+
+  def authorize_link_to(action_name, resource, permission, options, &block)
+    return unless policy(resource).send(permission)
+    options[:class] += " #{link_to_css}"
+    @template.link_to(action_name, **options) do
       block&.call
     end
   end
@@ -142,6 +150,29 @@ class TailwindFormBuilder < ActionView::Helpers::FormBuilder
       dark:hover:text-white
       dark:hover:bg-red-600
       dark:focus:ring-red-900
+    ].join(" ")
+  end
+
+  def link_to_css
+    %w[
+      rounded-lg
+      text-red-600
+      hover:text-white
+      bg-white
+      border
+      border-red-600
+      hover:bg-red-600
+      focus:ring-4
+      focus:outline-none
+      focus:ring-red-300
+      font-medium
+      rounded-lg
+      text-sm
+      px-5
+      text-center
+      dark:bg-primary-600
+      dark:hover:bg-primary-700
+      dark:focus:ring-primary-800
     ].join(" ")
   end
 end
