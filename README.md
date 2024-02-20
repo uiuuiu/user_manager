@@ -47,3 +47,8 @@
 ### Owner roles
 - Do not allow to delete default roles
 - Full permissions
+
+## Notes
+![user](./public/user.png)
+![team](./public/team.png)
+![role](./public/role.png)
