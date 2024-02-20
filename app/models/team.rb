@@ -10,4 +10,16 @@ class Team < ApplicationRecord
   has_many :sub_admins, -> { where("team_users.role = ?", "SubAdmin") }, through: :team_users, source: :user
 
   validates :name, presence: true, uniqueness: {case_sensitive: false}, length: {minimum: 3, maximum: 50}
+
+  after_create :create_default_team_roles
+
+  private
+
+  def create_default_team_roles
+    TeamRole.transaction do
+      Role.where(team_id: nil).each do |role|
+        team_roles.create!(role: role)
+      end
+    end
+  end
 end

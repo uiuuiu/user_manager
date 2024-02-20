@@ -1,2 +1,4 @@
+.flex.mb-4
+  = authorize_link_to "New role", :role, :create?, new_role_path, class: "py-2.5"
 .flex.mb-4.rounded.bg-gray-50.dark:bg-gray-800
   = render partial: "roles"

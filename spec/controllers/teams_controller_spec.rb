@@ -71,12 +71,22 @@ RSpec.describe TeamsController, type: :controller do
 
       describe "GET new" do
         before { get :new }
-        include_examples "unauthorized behaviors"
+
+        it "renders the new template" do
+          should render_template("new")
+        end
       end
 
       describe "POST create" do
         before { post :create, params: {team: {name: "New Team"}} }
-        include_examples "unauthorized behaviors"
+
+        it "redirects to teams path" do
+          should redirect_to(edit_team_path(Team.last))
+        end
+
+        it "sets a flash notice" do
+          expect(flash[:notice]).to eq("Team created successfully")
+        end
       end
 
       describe "GET edit" do
