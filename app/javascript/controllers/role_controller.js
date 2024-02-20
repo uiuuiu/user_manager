@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "checkbox" ];
+  static targets = [ "checkbox", "deleteButton" ];
 
   connect() {
     console.log("Role actions")
@@ -24,5 +24,9 @@ export default class extends Controller {
     //   },
     //   body: JSON.stringify({ role: { active: checked } })
     // })
+  }
+
+  delete() {
+    this.deleteButtonTarget.click()
   }
 }

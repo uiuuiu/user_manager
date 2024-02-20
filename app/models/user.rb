@@ -26,6 +26,8 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, unless: :is_profile_update
   validates :password, confirmation: true, unless: :is_profile_update
 
+  scope :owners, -> { joins(:owned_teams).distinct }
+
   attr_writer :login
 
   def login

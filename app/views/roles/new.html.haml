@@ -1,21 +1,20 @@
 %section.bg-white.dark:bg-gray-900
   .max-w-2xl.px-4.py-8.mx-auto.lg:py-16
     %h2.mb-4.text-xl.font-bold.text-gray-900.dark:text-white
-      = "New team"
-    = form_with model: @team, url: teams_path, method: :post, builder: TailwindFormBuilder, data: {turbo: false} do |f|
+      = "New role"
+    = form_with model: @role, url: roles_path, method: :post, builder: TailwindFormBuilder do |f|
       .grid.gap-4.mb-4.sm:grid-cols-1.sm:gap-6.sm:mb-5
         .w-full
           %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "name"}
-            Team name
-          = f.text_field :name, class: "p-2.5", required: "required", placeholder: "Team A"
+            Role name
+          = f.text_field :name, class: "p-2.5", required: "required", placeholder: "Super admin"
         .w-full
           %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "description"}
             Description
           = f.text_field :description, class: "p-2.5"
         %div
           %label.block.mb-2.text-sm.font-medium.text-gray-900.dark:text-white{:for => "user_ids"}
-            Members
-          -# %select#category{:class => "p-2.5", :multiple => "true"}
-          = f.select :user_ids, @users.map { |user| [user.full_name, user.id] }, {}, { class: "p-2.5", multiple: true }
+            Permissions
+          = render partial: "permissions", locals: { f: f }
       .flex.items-center.space-x-4
-        = f.authorize_submit :teams, :create?, "Create", class: "py-2.5"
+        = f.submit "Create", class: "py-2.5"

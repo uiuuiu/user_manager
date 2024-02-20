@@ -3,5 +3,6 @@ class DashboardController < AuthenticatedTeamController
   skip_before_action :authenticate_team!
 
   def index
+    @owners = User.owners.decorate
   end
 end

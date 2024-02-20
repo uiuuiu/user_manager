@@ -1,6 +1,13 @@
 %tr.bg-white.border-b.dark:bg-gray-800.dark:border-gray-700
-  %th.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{:scope => "row", "data-team-id-param" => "#{team.id}", "data-action" => "click->team#navigate"}
-    = team.name
+  - if team.owner_id == current_user.id
+    %th.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{:scope => "row", "data-team-id-param" => "#{team.id}", "data-action" => "click->team#navigate", "style" => "cursor: pointer; color: blue"}
+      = team.name
+    %td.px-6.py-4
+      = "Yes"
+  - else
+    %td.px-6.py-4.font-medium.text-gray-900.whitespace-nowrap.dark:text-white{:scope => "row"}
+      = team.name
+    %td.px-6.py-4
   %td.px-6.py-4
     = team.description
   %td.px-6.py-4

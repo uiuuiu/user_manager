@@ -7,6 +7,33 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+# Default roles
+roles_hash = {
+  "TeamAdmin" => {
+    users: ["1", "2", "3"],
+    teams: ["1", "2"],
+    roles: ["1", "2", "3"]
+  },
+  "SubAdmin" => {
+    users: ["1", "2", "3"],
+    teams: ["1", "2"],
+    roles: ["1"]
+  },
+  "User" => {
+    users: ["1"],
+    teams: ["1"],
+    roles: ["1"]
+  }
+}
+
+roles_hash.each do |role_name, permissions|
+  Role.find_or_create_by!(
+    name: role_name,
+    description: "A role that allows a user to perform actions as a #{role_name}",
+    permissions: permissions
+  )
+end
+
 User.transaction do
   20.times do |index|
     user = User.new
@@ -44,41 +71,15 @@ TeamUser.transaction do
     total_users = [2, 3, 4].sample
     user_ids = users.without(team.owner).sample(total_users).pluck(:id)
     user_ids.each do |user_id|
-      TeamUser.create!(
+      team_user = TeamUser.create!(
         user_id: user_id,
         team_id: team.id
       )
+
+      TeamUserRole.create!(
+        team_user: team_user,
+        team_role: team.team_roles.sample
+      )
     end
   end
-end
-
-# Default roles
-["TeamAdmin", "User"].each do |role_name|
-  Role.find_or_create_by!(
-    name: role_name,
-    description: "A role that allows a user to perform actions as a #{role_name}",
-    permissions: {}
-  )
-end
-
-# Team 1 roles
-Role.find_or_create_by!(
-  team: Team.first,
-  name: "SubAdmin",
-  description: "A role that allows a user to perform actions as a Sub Admin",
-  permissions: {}
-)
-
-Role.all.each do |role|
-  TeamRole.find_or_create_by!(
-    team: Team.first,
-    role: role
-  )
-end
-team = Team.first
-team.team_users.each do |team_user|
-  TeamUserRole.find_or_create_by!(
-    team_user: team_user,
-    team_role: team.team_roles.sample
-  )
 end

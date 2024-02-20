@@ -46,7 +46,7 @@ describe TeamPolicy do
 
     subject { described_class.new(pundit_new_user_context, "teams") }
 
-    it { is_expected.to permit_actions(%i[index show new edit update]) }
+    it { is_expected.to permit_actions(%i[index show new create edit update]) }
     it { is_expected.to forbid_actions(%i[destroy]) }
   end
 
@@ -60,7 +60,7 @@ describe TeamPolicy do
 
     subject { described_class.new(pundit_new_user_context, "teams") }
 
-    it { is_expected.to permit_actions(%i[index show]) }
-    it { is_expected.to forbid_actions(%i[new edit update destroy]) }
+    it { is_expected.to permit_actions(%i[index show new create]) }
+    it { is_expected.to forbid_actions(%i[edit update destroy]) }
   end
 end

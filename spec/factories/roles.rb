@@ -29,7 +29,8 @@ FactoryBot.define do
       permissions {
         {
           users: ["1", "2", "3"],
-          teams: ["1", "2"]
+          teams: ["1", "2"],
+          roles: ["1"]
         }
       }
     end

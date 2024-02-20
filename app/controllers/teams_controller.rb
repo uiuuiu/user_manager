@@ -3,7 +3,7 @@ class TeamsController < AuthenticatedTeamController
 
   def index
     authorize :team, :index?
-    @teams = current_user.owned_teams.includes(:users).decorate
+    @teams = current_user.teams.includes(:users).decorate
   end
 
   def new
